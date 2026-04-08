@@ -15,6 +15,7 @@ public class FrmStaffetta extends javax.swing.JFrame implements ThreadListener{
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmStaffetta.class.getName());
     private Queue<Thread> runner;
     private ArrayList<Thread> runnerAttivi;
+    private ArrayList<Runner> tuttiIRunner;
     /**
      * Creates new form FrmStaffetta
      */
@@ -22,6 +23,7 @@ public class FrmStaffetta extends javax.swing.JFrame implements ThreadListener{
         initComponents();
         runner = new LinkedList<>();
         runnerAttivi = new ArrayList<>();
+        tuttiIRunner = new ArrayList<>();
     }
 
     /**
@@ -61,6 +63,8 @@ public class FrmStaffetta extends javax.swing.JFrame implements ThreadListener{
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Staffetta");
+        setMinimumSize(new java.awt.Dimension(620, 380));
+        setResizable(false);
         getContentPane().setLayout(null);
 
         lblIconaRunner2.setText("Runner2");
@@ -95,7 +99,7 @@ public class FrmStaffetta extends javax.swing.JFrame implements ThreadListener{
             .addGroup(pnlRunner1Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(lblRunner1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
                 .addComponent(lblBarra1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27))
         );
@@ -128,7 +132,7 @@ public class FrmStaffetta extends javax.swing.JFrame implements ThreadListener{
             .addGroup(pnlRunner2Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(lblRunner2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
                 .addComponent(lblBarra2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27))
         );
@@ -161,7 +165,7 @@ public class FrmStaffetta extends javax.swing.JFrame implements ThreadListener{
             .addGroup(pnlRunner3Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(lblRunner3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
                 .addComponent(lblBarra3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27))
         );
@@ -194,7 +198,7 @@ public class FrmStaffetta extends javax.swing.JFrame implements ThreadListener{
             .addGroup(pnlRunner4Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(lblRunner4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
                 .addComponent(lblBarra4, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27))
         );
@@ -259,31 +263,33 @@ public class FrmStaffetta extends javax.swing.JFrame implements ThreadListener{
     }//GEN-LAST:event_btnAvviaActionPerformed
 
     private void btnFermaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFermaActionPerformed
-        /*
-        for(Thread t : runnerAttivi){
+        // Ferma tutti gli oggetti Runner
+        for (Runner r : tuttiIRunner) {
+            r.ferma();
+        }
+        for (Thread t : runnerAttivi) {
             t.interrupt();
         }
         btnAvvia.setEnabled(true);
         btnSospendi.setEnabled(false);
         btnFerma.setEnabled(false);
         btnRiprendi.setEnabled(false);
-        */
     }//GEN-LAST:event_btnFermaActionPerformed
 
     private void btnSospendiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSospendiActionPerformed
-        /*
-        try{
-        for(Thread t : runnerAttivi){
-            t.wait();
+        for (Runner r : tuttiIRunner) {
+            r.pausa();
         }
-        }catch(InterruptedException ie){
-            System.out.println("Thread interrotto");
-        }
-        */
+        btnSospendi.setEnabled(false);
+        btnRiprendi.setEnabled(true);
     }//GEN-LAST:event_btnSospendiActionPerformed
 
     private void btnRiprendiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRiprendiActionPerformed
-       // notifyAll();
+        for (Runner r : tuttiIRunner) {
+            r.riprendi();
+        }
+        btnSospendi.setEnabled(true);
+        btnRiprendi.setEnabled(false);
     }//GEN-LAST:event_btnRiprendiActionPerformed
 
     /**
@@ -292,9 +298,12 @@ public class FrmStaffetta extends javax.swing.JFrame implements ThreadListener{
     private void iniziaStaffetta(){
         int velocita = leggiVelocita();
         azzeraComponenti();
+        runner.clear();
+        runnerAttivi.clear();
         //Creazione runner
         for (int i = 1; i <= 4; i++) {
             Runner r = new Runner(i, velocita, this);
+            tuttiIRunner.add(r);
             Thread t = new Thread(r);
             runner.add(t);
         }
