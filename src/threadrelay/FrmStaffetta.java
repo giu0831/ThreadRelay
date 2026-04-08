@@ -4,14 +4,17 @@
  */
 package threadrelay;
 
+import java.util.*;
+
 /**
  *
  * @author utente
  */
-public class FrmStaffetta extends javax.swing.JFrame {
+public class FrmStaffetta extends javax.swing.JFrame implements ThreadListener{
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmStaffetta.class.getName());
-
+    private Queue<Thread> runner;
+    private ArrayList<Thread> runnerAttivi;
     /**
      * Creates new form FrmStaffetta
      */
@@ -28,22 +31,240 @@ public class FrmStaffetta extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        lblIconaRunner2 = new javax.swing.JLabel();
+        lblIconaRunner3 = new javax.swing.JLabel();
+        lblIconaRunner4 = new javax.swing.JLabel();
+        lblIconaRunner1 = new javax.swing.JLabel();
+        pbRunner1 = new javax.swing.JProgressBar();
+        pnlRunner1 = new javax.swing.JPanel();
+        lblRunner1 = new javax.swing.JLabel();
+        lblBarra1 = new javax.swing.JLabel();
+        pbRunner2 = new javax.swing.JProgressBar();
+        pnlRunner2 = new javax.swing.JPanel();
+        lblRunner2 = new javax.swing.JLabel();
+        lblBarra2 = new javax.swing.JLabel();
+        pbRunner3 = new javax.swing.JProgressBar();
+        pnlRunner3 = new javax.swing.JPanel();
+        lblRunner3 = new javax.swing.JLabel();
+        lblBarra3 = new javax.swing.JLabel();
+        pbRunner4 = new javax.swing.JProgressBar();
+        pnlRunner4 = new javax.swing.JPanel();
+        lblRunner4 = new javax.swing.JLabel();
+        lblBarra4 = new javax.swing.JLabel();
+        btnFerma = new javax.swing.JButton();
+        btnRiprendi = new javax.swing.JButton();
+        btnSospendi = new javax.swing.JButton();
+        btnAvvia = new javax.swing.JButton();
+        cmbVelocita = new javax.swing.JComboBox<>();
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Staffetta");
+        getContentPane().setLayout(null);
+
+        lblIconaRunner2.setText("Runner2");
+        getContentPane().add(lblIconaRunner2);
+        lblIconaRunner2.setBounds(20, 90, 50, 50);
+
+        lblIconaRunner3.setText("Runner3");
+        getContentPane().add(lblIconaRunner3);
+        lblIconaRunner3.setBounds(20, 160, 50, 50);
+
+        lblIconaRunner4.setText("Runner4");
+        getContentPane().add(lblIconaRunner4);
+        lblIconaRunner4.setBounds(20, 240, 50, 50);
+
+        lblIconaRunner1.setText("Runner1");
+        getContentPane().add(lblIconaRunner1);
+        lblIconaRunner1.setBounds(20, 20, 50, 50);
+        getContentPane().add(pbRunner1);
+        pbRunner1.setBounds(14, 15, 356, 60);
+
+        pnlRunner1.setBackground(new java.awt.Color(153, 204, 255));
+        pnlRunner1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        lblRunner1.setText("Runner1");
+
+        lblBarra1.setText("-");
+
+        javax.swing.GroupLayout pnlRunner1Layout = new javax.swing.GroupLayout(pnlRunner1);
+        pnlRunner1.setLayout(pnlRunner1Layout);
+        pnlRunner1Layout.setHorizontalGroup(
+            pnlRunner1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlRunner1Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(lblRunner1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblBarra1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27))
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+        pnlRunner1Layout.setVerticalGroup(
+            pnlRunner1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlRunner1Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(pnlRunner1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblRunner1)
+                    .addComponent(lblBarra1))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
+
+        getContentPane().add(pnlRunner1);
+        pnlRunner1.setBounds(390, 15, 186, 60);
+        getContentPane().add(pbRunner2);
+        pbRunner2.setBounds(14, 87, 356, 60);
+
+        pnlRunner2.setBackground(new java.awt.Color(153, 204, 255));
+        pnlRunner2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        lblRunner2.setText("Runner2");
+
+        lblBarra2.setText("-");
+
+        javax.swing.GroupLayout pnlRunner2Layout = new javax.swing.GroupLayout(pnlRunner2);
+        pnlRunner2.setLayout(pnlRunner2Layout);
+        pnlRunner2Layout.setHorizontalGroup(
+            pnlRunner2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlRunner2Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(lblRunner2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblBarra2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27))
+        );
+        pnlRunner2Layout.setVerticalGroup(
+            pnlRunner2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlRunner2Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(pnlRunner2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblRunner2)
+                    .addComponent(lblBarra2))
+                .addContainerGap(20, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(pnlRunner2);
+        pnlRunner2.setBounds(390, 87, 186, 60);
+        getContentPane().add(pbRunner3);
+        pbRunner3.setBounds(14, 159, 356, 60);
+
+        pnlRunner3.setBackground(new java.awt.Color(153, 204, 255));
+        pnlRunner3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        lblRunner3.setText("Runner3");
+
+        lblBarra3.setText("-");
+
+        javax.swing.GroupLayout pnlRunner3Layout = new javax.swing.GroupLayout(pnlRunner3);
+        pnlRunner3.setLayout(pnlRunner3Layout);
+        pnlRunner3Layout.setHorizontalGroup(
+            pnlRunner3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlRunner3Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(lblRunner3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblBarra3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27))
+        );
+        pnlRunner3Layout.setVerticalGroup(
+            pnlRunner3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlRunner3Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(pnlRunner3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblRunner3)
+                    .addComponent(lblBarra3))
+                .addContainerGap(20, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(pnlRunner3);
+        pnlRunner3.setBounds(390, 159, 186, 60);
+        getContentPane().add(pbRunner4);
+        pbRunner4.setBounds(14, 231, 356, 60);
+
+        pnlRunner4.setBackground(new java.awt.Color(153, 204, 255));
+        pnlRunner4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        lblRunner4.setText("Runner4");
+
+        lblBarra4.setText("-");
+
+        javax.swing.GroupLayout pnlRunner4Layout = new javax.swing.GroupLayout(pnlRunner4);
+        pnlRunner4.setLayout(pnlRunner4Layout);
+        pnlRunner4Layout.setHorizontalGroup(
+            pnlRunner4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlRunner4Layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(lblRunner4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblBarra4, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27))
+        );
+        pnlRunner4Layout.setVerticalGroup(
+            pnlRunner4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlRunner4Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(pnlRunner4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblRunner4)
+                    .addComponent(lblBarra4))
+                .addContainerGap(20, Short.MAX_VALUE))
+        );
+
+        getContentPane().add(pnlRunner4);
+        pnlRunner4.setBounds(390, 231, 186, 60);
+
+        btnFerma.setText("Ferma");
+        getContentPane().add(btnFerma);
+        btnFerma.setBounds(478, 309, 72, 23);
+
+        btnRiprendi.setText("Riprendi");
+        getContentPane().add(btnRiprendi);
+        btnRiprendi.setBounds(373, 309, 75, 23);
+
+        btnSospendi.setText("Sospendi");
+        getContentPane().add(btnSospendi);
+        btnSospendi.setBounds(264, 309, 79, 23);
+
+        btnAvvia.setText("Avvia");
+        btnAvvia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAvviaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnAvvia);
+        btnAvvia.setBounds(162, 309, 72, 23);
+
+        cmbVelocita.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "slow", "regular", "fast" }));
+        getContentPane().add(cmbVelocita);
+        cmbVelocita.setBounds(39, 309, 97, 22);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnAvviaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvviaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAvviaActionPerformed
+
+    /**
+     * Metodo per vedere quale velocita' e' selezionata
+     * @return 
+     */
+    private int leggiVelocita(){
+        if(cmbVelocita.getSelectedItem().equals("slow"))return 30;
+        else if(cmbVelocita.getSelectedItem().equals("regular")) return 20;
+        else return 10;
+    }
+    
+    @Override
+    public void cambioValore(int nRunner, int valoreCorrente){
+        
+    }
+    
+    @Override
+    public void InizioProssimoThread(int nRunner){
+        
+    }
+    
+    @Override
+    public void fineThread(int nRunner){
+        
+    }
     /**
      * @param args the command line arguments
      */
@@ -70,5 +291,30 @@ public class FrmStaffetta extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAvvia;
+    private javax.swing.JButton btnFerma;
+    private javax.swing.JButton btnRiprendi;
+    private javax.swing.JButton btnSospendi;
+    private javax.swing.JComboBox<String> cmbVelocita;
+    private javax.swing.JLabel lblBarra1;
+    private javax.swing.JLabel lblBarra2;
+    private javax.swing.JLabel lblBarra3;
+    private javax.swing.JLabel lblBarra4;
+    private javax.swing.JLabel lblIconaRunner1;
+    private javax.swing.JLabel lblIconaRunner2;
+    private javax.swing.JLabel lblIconaRunner3;
+    private javax.swing.JLabel lblIconaRunner4;
+    private javax.swing.JLabel lblRunner1;
+    private javax.swing.JLabel lblRunner2;
+    private javax.swing.JLabel lblRunner3;
+    private javax.swing.JLabel lblRunner4;
+    private javax.swing.JProgressBar pbRunner1;
+    private javax.swing.JProgressBar pbRunner2;
+    private javax.swing.JProgressBar pbRunner3;
+    private javax.swing.JProgressBar pbRunner4;
+    private javax.swing.JPanel pnlRunner1;
+    private javax.swing.JPanel pnlRunner2;
+    private javax.swing.JPanel pnlRunner3;
+    private javax.swing.JPanel pnlRunner4;
     // End of variables declaration//GEN-END:variables
 }

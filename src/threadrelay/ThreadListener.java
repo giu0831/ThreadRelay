@@ -10,4 +10,12 @@ package threadrelay;
  */
 public interface ThreadListener {
     
+    //metodo per cambio valore progress bar
+    void cambioValore(int nRunner, int valoreCorrente);
+
+    //metodo per far partire il prossimo thread
+    void InizioProssimoThread(int nRunner);
+
+    //fine thread
+    void fineThread(int nRunner);
 }
