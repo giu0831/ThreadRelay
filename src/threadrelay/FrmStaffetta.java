@@ -67,21 +67,21 @@ public class FrmStaffetta extends javax.swing.JFrame implements ThreadListener{
         setResizable(false);
         getContentPane().setLayout(null);
 
-        lblIconaRunner2.setText("Runner2");
+        lblIconaRunner2.setText("🏃");
         getContentPane().add(lblIconaRunner2);
-        lblIconaRunner2.setBounds(20, 90, 50, 50);
+        lblIconaRunner2.setBounds(20, 90, 12, 50);
 
-        lblIconaRunner3.setText("Runner3");
+        lblIconaRunner3.setText("🏃");
         getContentPane().add(lblIconaRunner3);
-        lblIconaRunner3.setBounds(20, 160, 50, 50);
+        lblIconaRunner3.setBounds(20, 160, 12, 50);
 
-        lblIconaRunner4.setText("Runner4");
+        lblIconaRunner4.setText("🏃");
         getContentPane().add(lblIconaRunner4);
-        lblIconaRunner4.setBounds(20, 240, 50, 50);
+        lblIconaRunner4.setBounds(20, 240, 12, 50);
 
-        lblIconaRunner1.setText("Runner1");
+        lblIconaRunner1.setText("🏃");
         getContentPane().add(lblIconaRunner1);
-        lblIconaRunner1.setBounds(20, 20, 50, 50);
+        lblIconaRunner1.setBounds(20, 20, 12, 50);
         getContentPane().add(pbRunner1);
         pbRunner1.setBounds(14, 15, 356, 60);
 
@@ -335,6 +335,10 @@ public class FrmStaffetta extends javax.swing.JFrame implements ThreadListener{
         btnSospendi.setEnabled(true);
         btnFerma.setEnabled(true);
         btnRiprendi.setEnabled(false);
+        lblIconaRunner1.setLocation(20, lblIconaRunner1.getY());
+        lblIconaRunner2.setLocation(20, lblIconaRunner2.getY());
+        lblIconaRunner3.setLocation(20, lblIconaRunner3.getY());
+        lblIconaRunner4.setLocation(20, lblIconaRunner4.getY());
     }
     
     /**
@@ -344,24 +348,29 @@ public class FrmStaffetta extends javax.swing.JFrame implements ThreadListener{
      */
     @Override
     public void cambioValore(int nRunner, int valoreCorrente){
+        int nuovaX = 20 + (valoreCorrente * 3);
         switch (nRunner) {
-        case 1:
-            pbRunner1.setValue(valoreCorrente);
-            lblBarra1.setText(String.valueOf(valoreCorrente));
-            break;
-        case 2:
-            pbRunner2.setValue(valoreCorrente);
-            lblBarra2.setText(String.valueOf(valoreCorrente));
-            break;
-        case 3:
-            pbRunner3.setValue(valoreCorrente);
-            lblBarra3.setText(String.valueOf(valoreCorrente));
-            break;
-        case 4:
-            pbRunner4.setValue(valoreCorrente);
-            lblBarra4.setText(String.valueOf(valoreCorrente));
-            break;
-    }
+            case 1:
+                pbRunner1.setValue(valoreCorrente);
+                lblBarra1.setText(String.valueOf(valoreCorrente));
+                lblIconaRunner1.setLocation(nuovaX, lblIconaRunner1.getY());
+                break;
+            case 2:
+                pbRunner2.setValue(valoreCorrente);
+                lblBarra2.setText(String.valueOf(valoreCorrente));
+                lblIconaRunner2.setLocation(nuovaX, lblIconaRunner2.getY());
+                break;
+            case 3:
+                pbRunner3.setValue(valoreCorrente);
+                lblBarra3.setText(String.valueOf(valoreCorrente));
+                lblIconaRunner3.setLocation(nuovaX, lblIconaRunner3.getY());
+                break;
+            case 4:
+                pbRunner4.setValue(valoreCorrente);
+                lblBarra4.setText(String.valueOf(valoreCorrente));
+                lblIconaRunner4.setLocation(nuovaX, lblIconaRunner4.getY());
+                break;
+        }
     }
     
     /**
