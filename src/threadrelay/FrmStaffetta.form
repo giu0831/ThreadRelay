@@ -317,6 +317,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Ferma"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFermaActionPerformed"/>
+      </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
           <AbsoluteConstraints x="478" y="309" width="-1" height="-1"/>
@@ -327,9 +330,12 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Riprendi"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnRiprendiActionPerformed"/>
+      </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="373" y="309" width="-1" height="-1"/>
+          <AbsoluteConstraints x="373" y="309" width="80" height="-1"/>
         </Constraint>
       </Constraints>
     </Component>
@@ -337,9 +343,12 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Sospendi"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSospendiActionPerformed"/>
+      </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="264" y="309" width="-1" height="-1"/>
+          <AbsoluteConstraints x="264" y="309" width="80" height="-1"/>
         </Constraint>
       </Constraints>
     </Component>

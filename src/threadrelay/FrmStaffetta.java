@@ -20,6 +20,8 @@ public class FrmStaffetta extends javax.swing.JFrame implements ThreadListener{
      */
     public FrmStaffetta() {
         initComponents();
+        runner = new LinkedList<>();
+        runnerAttivi = new ArrayList<>();
     }
 
     /**
@@ -210,16 +212,31 @@ public class FrmStaffetta extends javax.swing.JFrame implements ThreadListener{
         pnlRunner4.setBounds(390, 231, 186, 60);
 
         btnFerma.setText("Ferma");
+        btnFerma.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFermaActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnFerma);
         btnFerma.setBounds(478, 309, 72, 23);
 
         btnRiprendi.setText("Riprendi");
+        btnRiprendi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRiprendiActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnRiprendi);
-        btnRiprendi.setBounds(373, 309, 75, 23);
+        btnRiprendi.setBounds(373, 309, 80, 23);
 
         btnSospendi.setText("Sospendi");
+        btnSospendi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSospendiActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnSospendi);
-        btnSospendi.setBounds(264, 309, 79, 23);
+        btnSospendi.setBounds(264, 309, 80, 23);
 
         btnAvvia.setText("Avvia");
         btnAvvia.addActionListener(new java.awt.event.ActionListener() {
@@ -238,9 +255,51 @@ public class FrmStaffetta extends javax.swing.JFrame implements ThreadListener{
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAvviaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvviaActionPerformed
-        // TODO add your handling code here:
+        iniziaStaffetta();
     }//GEN-LAST:event_btnAvviaActionPerformed
 
+    private void btnFermaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFermaActionPerformed
+        /*
+        for(Thread t : runnerAttivi){
+            t.interrupt();
+        }
+        btnAvvia.setEnabled(true);
+        btnSospendi.setEnabled(false);
+        btnFerma.setEnabled(false);
+        btnRiprendi.setEnabled(false);
+        */
+    }//GEN-LAST:event_btnFermaActionPerformed
+
+    private void btnSospendiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSospendiActionPerformed
+        /*
+        try{
+        for(Thread t : runnerAttivi){
+            t.wait();
+        }
+        }catch(InterruptedException ie){
+            System.out.println("Thread interrotto");
+        }
+        */
+    }//GEN-LAST:event_btnSospendiActionPerformed
+
+    private void btnRiprendiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRiprendiActionPerformed
+       // notifyAll();
+    }//GEN-LAST:event_btnRiprendiActionPerformed
+
+    /**
+     * Metodo per far iniziare la staffetta
+     */
+    private void iniziaStaffetta(){
+        int velocita = leggiVelocita();
+        azzeraComponenti();
+        //Creazione runner
+        for (int i = 1; i <= 4; i++) {
+            Runner r = new Runner(i, velocita, this);
+            Thread t = new Thread(r);
+            runner.add(t);
+        }
+        InizioProssimoThread();
+    }
     /**
      * Metodo per vedere quale velocita' e' selezionata
      * @return 
@@ -251,19 +310,88 @@ public class FrmStaffetta extends javax.swing.JFrame implements ThreadListener{
         else return 10;
     }
     
+    /**
+     * Metodo per azzerare lo stato dei componenti
+     */
+    private void azzeraComponenti(){
+        pbRunner1.setValue(0);
+        lblBarra1.setText("-");
+        pbRunner2.setValue(0);
+        lblBarra2.setText("-");
+        pbRunner3.setValue(0);
+        lblBarra3.setText("-");
+        pbRunner4.setValue(0);
+        lblBarra4.setText("-");
+        btnAvvia.setEnabled(false);
+        btnSospendi.setEnabled(true);
+        btnFerma.setEnabled(true);
+        btnRiprendi.setEnabled(false);
+    }
+    
+    /**
+     * Metodo per cambiare valore alle barre
+     * @param nRunner runner che chiama questo metodo
+     * @param valoreCorrente valore da impostare
+     */
     @Override
     public void cambioValore(int nRunner, int valoreCorrente){
-        
+        switch (nRunner) {
+        case 1:
+            pbRunner1.setValue(valoreCorrente);
+            lblBarra1.setText(String.valueOf(valoreCorrente));
+            break;
+        case 2:
+            pbRunner2.setValue(valoreCorrente);
+            lblBarra2.setText(String.valueOf(valoreCorrente));
+            break;
+        case 3:
+            pbRunner3.setValue(valoreCorrente);
+            lblBarra3.setText(String.valueOf(valoreCorrente));
+            break;
+        case 4:
+            pbRunner4.setValue(valoreCorrente);
+            lblBarra4.setText(String.valueOf(valoreCorrente));
+            break;
+    }
     }
     
+    /**
+     * Metodo per far partire il prossimo thread 
+     */
     @Override
-    public void InizioProssimoThread(int nRunner){
-        
+    public void InizioProssimoThread(){
+        Thread prossimo = runner.poll();
+        if (prossimo != null) {
+            runnerAttivi.add(prossimo);
+            prossimo.start();
+        }
     }
     
+    /**
+     * Metodo per rimuovere il thread che ha finito
+     * @param nRunner 
+     */
     @Override
     public void fineThread(int nRunner){
-        
+        switch (nRunner) {
+            case 1:
+                lblBarra1.setText("Fine");
+                break;
+            case 2:
+                lblBarra2.setText("Fine");
+                break;
+            case 3:
+                lblBarra3.setText("Fine");
+                break;
+            case 4:
+                lblBarra4.setText("Fine");
+                btnAvvia.setEnabled(true);
+                btnSospendi.setEnabled(false);
+                btnFerma.setEnabled(false);
+                btnRiprendi.setEnabled(false);
+                break;
+        }
+        runnerAttivi.removeFirst();
     }
     /**
      * @param args the command line arguments

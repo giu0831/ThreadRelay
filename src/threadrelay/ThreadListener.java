@@ -14,7 +14,7 @@ public interface ThreadListener {
     void cambioValore(int nRunner, int valoreCorrente);
 
     //metodo per far partire il prossimo thread
-    void InizioProssimoThread(int nRunner);
+    void InizioProssimoThread();
 
     //fine thread
     void fineThread(int nRunner);
