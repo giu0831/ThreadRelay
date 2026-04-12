@@ -14,6 +14,7 @@ public class ThreadRelay {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        //creazione e apertura form staffetta
         java.awt.EventQueue.invokeLater(() -> new FrmStaffetta().setVisible(true));
     }
     

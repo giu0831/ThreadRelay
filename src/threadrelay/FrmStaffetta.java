@@ -7,20 +7,21 @@ package threadrelay;
 import java.util.*;
 
 /**
- *
+ * Form staffetta, implementa ThreadListener in modo da essere in grado di comunicare con il runner
  * @author utente
  */
 public class FrmStaffetta extends javax.swing.JFrame implements ThreadListener{
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmStaffetta.class.getName());
-    private Queue<Thread> runner;
-    private ArrayList<Thread> runnerAttivi;
-    private ArrayList<Runner> tuttiIRunner;
+    private Queue<Thread> runner; //coda di thread per sapere chi deve partire quando un thread arriva a 90
+    private ArrayList<Thread> runnerAttivi; //lista dei thread attivi
+    private ArrayList<Runner> tuttiIRunner; //lista di runner per poter usare i metodi come ferma, riprendi e pausa
     /**
      * Creates new form FrmStaffetta
      */
     public FrmStaffetta() {
         initComponents();
+        //inizializzazione variabili
         runner = new LinkedList<>();
         runnerAttivi = new ArrayList<>();
         tuttiIRunner = new ArrayList<>();
@@ -266,17 +267,20 @@ public class FrmStaffetta extends javax.swing.JFrame implements ThreadListener{
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAvviaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAvviaActionPerformed
+        //la staffetta viene iniziata
         iniziaStaffetta();
     }//GEN-LAST:event_btnAvviaActionPerformed
 
     private void btnFermaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFermaActionPerformed
-        // Ferma tutti gli oggetti Runner
+        //tutti i runner vengono fermati
         for (Runner r : tuttiIRunner) {
             r.ferma();
         }
+        //tutti i thread vengono interrotti
         for (Thread t : runnerAttivi) {
             t.interrupt();
         }
+        //riabilitazione/disabilitazione bottoni
         btnAvvia.setEnabled(true);
         btnSospendi.setEnabled(false);
         btnFerma.setEnabled(false);
@@ -284,17 +288,21 @@ public class FrmStaffetta extends javax.swing.JFrame implements ThreadListener{
     }//GEN-LAST:event_btnFermaActionPerformed
 
     private void btnSospendiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSospendiActionPerformed
+        //tutti i runner vengono messi in pausa
         for (Runner r : tuttiIRunner) {
             r.pausa();
         }
+        //riabilitazione/disabilitazione bottoni
         btnSospendi.setEnabled(false);
         btnRiprendi.setEnabled(true);
     }//GEN-LAST:event_btnSospendiActionPerformed
 
     private void btnRiprendiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRiprendiActionPerformed
+        //tutti i runner vengono ripresi
         for (Runner r : tuttiIRunner) {
             r.riprendi();
         }
+        //riabilitazione/disabilitazione bottoni
         btnSospendi.setEnabled(true);
         btnRiprendi.setEnabled(false);
     }//GEN-LAST:event_btnRiprendiActionPerformed
@@ -303,23 +311,28 @@ public class FrmStaffetta extends javax.swing.JFrame implements ThreadListener{
      * Metodo per far iniziare la staffetta
      */
     private void iniziaStaffetta(){
+        //inizializzazione velocita
         int velocita = leggiVelocita();
+        //configurazione grafica
         azzeraComponenti();
+        //le variabili vengono resettate
         runner.clear();
         runnerAttivi.clear();
-        //Creazione runner
+        tuttiIRunner.clear();
+        //Creazione 4 runner
         for (int i = 1; i <= 4; i++) {
             Runner r = new Runner(i, velocita, this);
             tuttiIRunner.add(r);
             Thread t = new Thread(r);
             runner.add(t);
         }
+        //partenza primo thread
         InizioProssimoThread();
     }
     
     /**
      * Metodo per vedere quale velocita' e' selezionata
-     * @return 
+     * @return velocita
      */
     private int leggiVelocita(){
         if(cmbVelocita.getSelectedItem().equals("slow"))return 30;
@@ -351,12 +364,14 @@ public class FrmStaffetta extends javax.swing.JFrame implements ThreadListener{
     
     /**
      * Metodo per cambiare valore alle barre
-     * @param nRunner runner che chiama questo metodo
+     * @param nRunner numero del runner che chiama questo metodo
      * @param valoreCorrente valore da impostare
      */
     @Override
     public void cambioValore(int nRunner, int valoreCorrente){
+        //calcolo nuova posizione dell'icona
         int nuovaX = 20 + (valoreCorrente * 3);
+        //controllo runner
         switch (nRunner) {
             case 1:
                 pbRunner1.setValue(valoreCorrente);
@@ -386,19 +401,23 @@ public class FrmStaffetta extends javax.swing.JFrame implements ThreadListener{
      */
     @Override
     public void InizioProssimoThread(){
-        Thread prossimo = runner.poll();
-        if (prossimo != null) {
-            runnerAttivi.add(prossimo);
-            prossimo.start();
+        //estraggo un runner
+        Thread prossimoRunner = runner.poll();
+        //controllo per vedere se c'e' un altro runner
+        if (prossimoRunner != null) {
+            //partenza thread
+            runnerAttivi.add(prossimoRunner);
+            prossimoRunner.start();
         }
     }
     
     /**
      * Metodo per rimuovere il thread che ha finito
-     * @param nRunner 
+     * @param nRunner numero del runner che chiama questo metodo
      */
     @Override
     public void fineThread(int nRunner){
+        //controllo runner
         switch (nRunner) {
             case 1:
                 lblBarra1.setText("Fine");
@@ -417,6 +436,7 @@ public class FrmStaffetta extends javax.swing.JFrame implements ThreadListener{
                 btnRiprendi.setEnabled(false);
                 break;
         }
+        //rimuovo il thread che ha finito dalla lista
         runnerAttivi.removeFirst();
     }
     /**
