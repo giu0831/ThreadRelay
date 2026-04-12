@@ -67,21 +67,25 @@ public class FrmStaffetta extends javax.swing.JFrame implements ThreadListener{
         setResizable(false);
         getContentPane().setLayout(null);
 
+        lblIconaRunner2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/runner.png"))); // NOI18N
         lblIconaRunner2.setText("🏃");
         getContentPane().add(lblIconaRunner2);
-        lblIconaRunner2.setBounds(20, 90, 12, 50);
+        lblIconaRunner2.setBounds(20, 90, 40, 50);
 
+        lblIconaRunner3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/runner.png"))); // NOI18N
         lblIconaRunner3.setText("🏃");
         getContentPane().add(lblIconaRunner3);
-        lblIconaRunner3.setBounds(20, 160, 12, 50);
+        lblIconaRunner3.setBounds(20, 160, 40, 50);
 
+        lblIconaRunner4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/runner.png"))); // NOI18N
         lblIconaRunner4.setText("🏃");
         getContentPane().add(lblIconaRunner4);
-        lblIconaRunner4.setBounds(20, 240, 12, 50);
+        lblIconaRunner4.setBounds(20, 230, 40, 50);
 
+        lblIconaRunner1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/runner.png"))); // NOI18N
         lblIconaRunner1.setText("🏃");
         getContentPane().add(lblIconaRunner1);
-        lblIconaRunner1.setBounds(20, 20, 12, 50);
+        lblIconaRunner1.setBounds(20, 20, 40, 50);
         getContentPane().add(pbRunner1);
         pbRunner1.setBounds(14, 15, 356, 60);
 
@@ -222,7 +226,7 @@ public class FrmStaffetta extends javax.swing.JFrame implements ThreadListener{
             }
         });
         getContentPane().add(btnFerma);
-        btnFerma.setBounds(478, 309, 72, 23);
+        btnFerma.setBounds(480, 310, 72, 23);
 
         btnRiprendi.setText("Riprendi");
         btnRiprendi.addActionListener(new java.awt.event.ActionListener() {
@@ -231,16 +235,19 @@ public class FrmStaffetta extends javax.swing.JFrame implements ThreadListener{
             }
         });
         getContentPane().add(btnRiprendi);
-        btnRiprendi.setBounds(373, 309, 80, 23);
+        btnRiprendi.setBounds(360, 310, 100, 23);
 
         btnSospendi.setText("Sospendi");
+        btnSospendi.setMaximumSize(new java.awt.Dimension(100, 23));
+        btnSospendi.setMinimumSize(new java.awt.Dimension(100, 23));
+        btnSospendi.setPreferredSize(new java.awt.Dimension(100, 23));
         btnSospendi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSospendiActionPerformed(evt);
             }
         });
         getContentPane().add(btnSospendi);
-        btnSospendi.setBounds(264, 309, 80, 23);
+        btnSospendi.setBounds(240, 310, 100, 23);
 
         btnAvvia.setText("Avvia");
         btnAvvia.addActionListener(new java.awt.event.ActionListener() {
@@ -249,7 +256,7 @@ public class FrmStaffetta extends javax.swing.JFrame implements ThreadListener{
             }
         });
         getContentPane().add(btnAvvia);
-        btnAvvia.setBounds(162, 309, 72, 23);
+        btnAvvia.setBounds(150, 310, 72, 23);
 
         cmbVelocita.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "slow", "regular", "fast" }));
         getContentPane().add(cmbVelocita);
@@ -309,6 +316,7 @@ public class FrmStaffetta extends javax.swing.JFrame implements ThreadListener{
         }
         InizioProssimoThread();
     }
+    
     /**
      * Metodo per vedere quale velocita' e' selezionata
      * @return 

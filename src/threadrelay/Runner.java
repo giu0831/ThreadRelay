@@ -41,7 +41,7 @@ public class Runner implements Runnable{
             if(stop)return;
             //controllo pausa
             synchronized (this) {
-                while (pausa) {
+                if(pausa) {
                     try {
                         //resta in pausa finche' non viene chiamato notify()
                         wait();
